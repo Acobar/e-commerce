@@ -1,0 +1,23 @@
+server:
+  port: 8761
+
+spring:
+  config:
+    #if we can't find the config for the microservice, try to start it
+    import: optional:configserver:http://localhost:8888
+  application:
+    # this name is important for the config server - must match the .yml/.properties in the configurations
+    name: discovery-service
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    #the eureka/discovery service should not register itself with itself
+    register-with-eureka: false
+    #we dont' want to fetch the registry of the eureka service for itself
+    fetch-registry: false
+    service-url:
+      default-zone: http://${eureka.instance.hostname}/${server.port}/eureka/
+
+
