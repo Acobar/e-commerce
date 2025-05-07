@@ -1,0 +1,6 @@
+#configurations in config-server yml
+spring:
+  config:
+    import: optional:configserver:http://localhost:8888
+  application:
+    name: customer-service
