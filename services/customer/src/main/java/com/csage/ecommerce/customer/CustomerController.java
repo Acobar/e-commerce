@@ -29,12 +29,12 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.findAllCustomers());
     }
 
-    @GetMapping("/exists/${customerId}")
+    @GetMapping("/exists/{customerId}")
     public ResponseEntity<Boolean> existsById(@PathVariable String customerId) {
         return ResponseEntity.ok(customerService.existsById(customerId));
     }
 
-    @GetMapping("/${customerId}")
+    @GetMapping("/{customerId}")
     public ResponseEntity<Customer> findById(@PathVariable String customerId) {
         return ResponseEntity.ok(customerService.findById(customerId));
     }
