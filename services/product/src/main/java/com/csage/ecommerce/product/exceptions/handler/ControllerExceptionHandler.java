@@ -1,6 +1,7 @@
-package com.csage.ecommerce.customer.exceptions.handler;
+package com.csage.ecommerce.product.exceptions.handler;
 
-import com.csage.ecommerce.customer.exceptions.CustomerNotFoundException;
+import com.csage.ecommerce.product.exceptions.ProductPurchaseException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -13,8 +14,13 @@ import java.util.HashMap;
 @RestControllerAdvice
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler(CustomerNotFoundException.class)
-    public ResponseEntity<String> handle(CustomerNotFoundException ex) {
+    @ExceptionHandler(ProductPurchaseException.class)
+    public ResponseEntity<String> handle(ProductPurchaseException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<String> handle(EntityNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 

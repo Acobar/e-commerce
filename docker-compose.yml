@@ -1,6 +1,6 @@
 services:
   postgres:
-    container_name: pg_sql
+    container_name: postgres
     image: postgres
     environment:
       POSTGRES_USER: csage
@@ -16,6 +16,8 @@ services:
     restart: unless-stopped
 
   pgadmin:
+    depends_on:
+      - postgres
     container_name: pgadmin
     image: dpage/pgadmin4
     environment:
@@ -42,6 +44,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
 
   mongo-express:
+    depends_on:
+      - mongodb
     image: mongo-express
     container_name: mongo-express
     restart: always
@@ -67,3 +71,4 @@ volumes:
   postgres:
   pgadmin:
   mongo:
+  mongo-express:

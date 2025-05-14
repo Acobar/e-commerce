@@ -1,0 +1,8 @@
+#configurations in config-server yml
+#load boostrap.yml first when using cloud config if placeholders don't seem to be loading properly
+spring:
+  config:
+    import: optional:configserver:http://localhost:8888
+    name: product-service
+  application:
+    name: product-service

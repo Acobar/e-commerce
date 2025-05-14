@@ -1,0 +1,8 @@
+#load boostrap.yml first when using cloud config if placeholders don't seem to be loading properly
+spring:
+  application:
+    name: product-service
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
