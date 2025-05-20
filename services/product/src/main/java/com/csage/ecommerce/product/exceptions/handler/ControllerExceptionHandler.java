@@ -28,7 +28,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<ErrorResponse> handle(MethodArgumentNotValidException ex) {
         var errors = new HashMap<String, String>();
         ex.getBindingResult().getAllErrors().forEach(objectError -> {
-            if(objectError instanceof FieldError fieldError) {
+            if (objectError instanceof FieldError fieldError) {
                 errors.put(fieldError.getField(), objectError.getDefaultMessage());
             }
         });

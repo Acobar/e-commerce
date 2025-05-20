@@ -1,0 +1,32 @@
+#inherit base values from application.yml, such as eureka info
+server:
+  port: 8070
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/product
+    username: csage
+    password: password
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        #the producer needs to inform the consumer of our topic - what the object we're sending is-to basically trust this thing.
+        spring.json.type.mapping: orderConfirmation:com.csage.ecommerce.kafka.OrderConfirmation
+
+#this will depend on some other microservices, so put that info here
+application:
+  config:
+    #fetch the info from api gateway, so we are not hampered when scaling since it will load balance and knows services
+    #TODO: swap to api gateway when set up.
+    customers-url: http://localhost:8222/api/v1/customers
+    payments-url: http://localhost:8222/api/v1/payments
+    products-url: http://localhost:8222/api/v1/products
