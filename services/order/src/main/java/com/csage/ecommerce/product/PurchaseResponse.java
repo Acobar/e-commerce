@@ -2,11 +2,11 @@ package com.csage.ecommerce.product;
 
 import java.math.BigDecimal;
 
-public record PurchaseResponse (
-   Integer productId,
-   String name,
-   String description,
-   BigDecimal price,
-   double quantity
-){
+public record PurchaseResponse(
+        Integer productId,
+        String name,
+        String description,
+        BigDecimal price,
+        double quantity
+) {
 }

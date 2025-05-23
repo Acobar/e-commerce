@@ -1,0 +1,28 @@
+#inherit base values from application.yml, such as eureka info
+server:
+  port: 8060
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/payment
+    username: csage
+    password: password
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    database: postgresql
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-description: "init"
+    baseline-version: 1
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        #the producer needs to inform the consumer of our topic - what the object we're sending is-to basically trust this thing.
+        spring.json.type.mapping: paymentConfirmation:com.csage.ecommerce.payment.notification.PaymentNotificationRequest

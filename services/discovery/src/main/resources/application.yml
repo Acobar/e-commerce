@@ -13,9 +13,9 @@ eureka:
   instance:
     hostname: localhost
   client:
-    #the eureka/discovery service should not register itself with itself
+    #By default, the registry also tries to register itself, so you need to disable that behavior.
+    #Additionally, it is a good convention to put this registry on a separate port when using it locally.
     register-with-eureka: false
-    #we dont' want to fetch the registry of the eureka service for itself
     fetch-registry: false
     service-url:
       default-zone: http://${eureka.instance.hostname}/${server.port}/eureka/

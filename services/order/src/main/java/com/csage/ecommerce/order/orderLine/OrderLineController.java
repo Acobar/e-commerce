@@ -1,6 +1,5 @@
 package com.csage.ecommerce.order.orderLine;
 
-import com.csage.ecommerce.orderline.OrderLine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

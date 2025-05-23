@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.util.List;
 
-public record OrderRequest (
+public record OrderRequest(
         Integer id,
         String reference,
         @Positive(message = "Amount must be a positive number")
@@ -21,5 +21,5 @@ public record OrderRequest (
         String customerId,
         @NotEmpty(message = "Products are required")
         List<PurchaseRequest> products
-        ){
+) {
 }

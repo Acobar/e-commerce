@@ -13,9 +13,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductClient {
+    private final RestTemplate restTemplate;
     @Value("${application.config.products-url}")
     private String productUrl;
-    private final RestTemplate restTemplate;
 
     public List<PurchaseResponse> purchaseProducts(List<PurchaseRequest> purchaseRequests) {
         HttpHeaders headers = new HttpHeaders();
@@ -23,12 +23,13 @@ public class ProductClient {
         HttpEntity<List<PurchaseRequest>> request = new HttpEntity<>(purchaseRequests, headers);
 
         //this will let the restTemplate parse the response automatically to this type
-        ParameterizedTypeReference<List<PurchaseResponse>> typeRef = new ParameterizedTypeReference<>() {};
+        ParameterizedTypeReference<List<PurchaseResponse>> typeRef = new ParameterizedTypeReference<>() {
+        };
         ResponseEntity<List<PurchaseResponse>> responseEntity = restTemplate.exchange(
                 productUrl + "/purchase", HttpMethod.POST, request, typeRef);
 
-        if(responseEntity.getStatusCode().isError()){
-            throw new BusinessException("An error occurred while purchasing products.  Error code: "+ responseEntity.getStatusCode());
+        if (responseEntity.getStatusCode().isError()) {
+            throw new BusinessException("An error occurred while purchasing products.  Error code: " + responseEntity.getStatusCode());
         }
         return responseEntity.getBody();
 
