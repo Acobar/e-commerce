@@ -1,0 +1,40 @@
+spring:
+  data:
+    mongodb:
+      #same as docker compose file
+      username: csage
+      password: password
+      host: localhost
+      port: 27017
+      database: customer
+      authentication-database: admin
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringSerializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        #we consume two types, payment and order
+        spring.json.type.mapping: paymentConfirmation:com.csage.ecommerce.kafka.payment.PaymentConfirmation, orderConfirmation:com.csage.ecommerce.kafka.order.OrderConfirmation
+        #by default kafka has secrets, so we need to tell it what the ttrusted package(s) are if we're not using a secured connection
+        spring.json.trusted.packages: 'com.csage.ecommerce.*'
+      group-id: paymentGroup,orderGroup #our microservices
+      auto-offset-reset: earliest
+  mail:
+    host: localhost
+    port: 1025
+    username: csage
+    password: csage
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enabled: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
+
+server:
+  port: 8040

@@ -50,8 +50,10 @@ public class OrderService {
             );
         }
 
+        //initiate the payment request
         var paymentRequest = new PaymentRequest(order.getTotalAmount(), order.getPaymentMethod(), order.getId(), order.getReference(), customerResponse);
         paymentClient.requestOrderPayment(paymentRequest);
+
         //send order confirmation to notification microservice (kafka)
         orderProducer.sendOrderConfirmation(
                 new OrderConfirmation(
