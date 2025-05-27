@@ -28,19 +28,21 @@ public class EmailService {
     @Async
     public void sendPaymentSuccessEmail(String destinationEmail, String customerName, BigDecimal amount, String orderReference) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper mimeHelper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
-        mimeHelper.setFrom("csage@gmail.com");
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
+        helper.setFrom("csage@gmail.com");
 
         final String templateName = EmailTemplates.PAYMENT_CONFIRMATION.getTemplateName();
         Map<String, Object> variables = Map.of("customerName", customerName, "amount", amount, "orderReference", orderReference);
 
         Context context = new Context();
         context.setVariables(variables);
-        mimeHelper.setSubject(EmailTemplates.PAYMENT_CONFIRMATION.getSubject());
+        helper.setSubject(EmailTemplates.PAYMENT_CONFIRMATION.getSubject());
 
         try {
             String htmlTemplate = templateEngine.process(templateName, context);
-            mimeHelper.setTo(destinationEmail);
+            helper.setText(htmlTemplate, true);
+            helper.setTo(destinationEmail);
+
             log.info("Sending email to {} using template {}", destinationEmail, templateName);
             mailSender.send(mimeMessage);
             log.info("Email sent to {}", destinationEmail);
@@ -53,19 +55,21 @@ public class EmailService {
     @Async
     public void sendOrderConfirmationEmail(String destinationEmail, String customerName, BigDecimal amount, String orderReference, List<Product> products) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper mimeHelper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
-        mimeHelper.setFrom("csage@gmail.com");
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
+        helper.setFrom("csage@gmail.com");
 
         final String templateName = EmailTemplates.ORDER_CONFIRMATION.getTemplateName();
         Map<String, Object> variables = Map.of("customerName", customerName, "totalAmount", amount, "orderReference", orderReference, "products", products);
 
         Context context = new Context();
         context.setVariables(variables);
-        mimeHelper.setSubject(EmailTemplates.ORDER_CONFIRMATION.getSubject());
+        helper.setSubject(EmailTemplates.ORDER_CONFIRMATION.getSubject());
 
         try {
             String htmlTemplate = templateEngine.process(templateName, context);
-            mimeHelper.setTo(destinationEmail);
+            helper.setText(htmlTemplate, true);
+            helper.setTo(destinationEmail);
+
             log.info("Sending email to {} using template {}", destinationEmail, templateName);
             mailSender.send(mimeMessage);
             log.info("Email sent to {}", destinationEmail);
