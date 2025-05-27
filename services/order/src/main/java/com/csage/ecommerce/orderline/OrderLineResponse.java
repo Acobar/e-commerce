@@ -1,4 +1,4 @@
-package com.csage.ecommerce.order.orderLine;
+package com.csage.ecommerce.orderline;
 
 public record OrderLineResponse(
         Integer id,

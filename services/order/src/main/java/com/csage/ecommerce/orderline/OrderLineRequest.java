@@ -1,4 +1,4 @@
-package com.csage.ecommerce.order.orderLine;
+package com.csage.ecommerce.orderline;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

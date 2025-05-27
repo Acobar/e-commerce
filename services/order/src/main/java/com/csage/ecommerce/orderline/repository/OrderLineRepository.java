@@ -1,4 +1,4 @@
-package com.csage.ecommerce.order.orderLine;
+package com.csage.ecommerce.orderline.repository;
 
 import com.csage.ecommerce.orderline.OrderLine;
 import org.springframework.data.jpa.repository.JpaRepository;

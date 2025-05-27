@@ -1,7 +1,6 @@
-package com.csage.ecommerce.order.orderLine;
+package com.csage.ecommerce.orderline;
 
 import com.csage.ecommerce.order.Order;
-import com.csage.ecommerce.orderline.OrderLine;
 import org.springframework.stereotype.Service;
 
 @Service
